@@ -59,7 +59,7 @@ export const initBeanField = (): void => {
 
   if (reducedMotion()) return
 
-  beans.forEach(({ driftEl, depth }) => {
+  beans.forEach(({ driftEl }) => {
     gsap.fromTo(
       driftEl,
       { y: '-10vh' },

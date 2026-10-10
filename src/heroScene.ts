@@ -1,3 +1,4 @@
+
 import * as THREE from 'three'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -493,7 +494,11 @@ export const initHeroScene = (): void => {
 
   // Theatre.js — art-directed drift for camera framing and lighting.
   try {
-    const project = getProject('Cafe-Atelier-Experience')
+    // Core-only mode: pass the same empty state Theatre builds internally —
+    // without it, Theatre throws after 1s because @theatre/studio is never bundled.
+    const project = getProject('Cafe-Atelier-Experience', {
+      state: { sheetsById: {}, definitionVersion: '0.4.0', revisionHistory: [] },
+    })
     const heroSheet = project.sheet('HeroCinematic')
 
     const sceneObj = heroSheet.object('HeroGroup', {
@@ -508,7 +513,9 @@ export const initHeroScene = (): void => {
       keyIntensity: types.number(2.6, { range: [0, 6] }),
     })
 
-    heroSheet.sequence.play({ iterationCount: Infinity, range: [0, 18], rate: 1 })
+    project.ready.then(() => {
+      heroSheet.sequence.play({ iterationCount: Infinity, range: [0, 10], rate: 1 })
+    })
 
     gsap.ticker.add(() => {
       const sp = sceneObj.value

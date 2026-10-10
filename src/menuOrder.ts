@@ -83,6 +83,7 @@ const renderCartList = (): void => {
   cart.forEach((line) => {
     const row = document.createElement('li')
     row.className = 'cart-item'
+    row.dataset.name = line.item.name
     row.innerHTML = `
       <img class="cart-item__thumb" src="${line.item.image}" alt="" loading="lazy" decoding="async" />
       <div class="cart-item__info">
@@ -218,8 +219,7 @@ const changeQty = (name: string, delta: number): void => {
     if (valueEl) valueEl.textContent = String(line.qty)
     const lineEl = panelList.querySelector<HTMLElement>(`.cart-item[data-name="${name}"] .cart-item__line`)
     if (lineEl) lineEl.textContent = formatPrice(line.item.cents * line.qty)
-    const stepper = panelList.querySelector(`.cart-item[data-name="${name}"] .stepper__value`)
-    popNumber(stepper as HTMLElement | null)
+    popNumber(valueEl)
   } else {
     renderCartList()
   }
@@ -345,9 +345,9 @@ const placeOrder = (): void => {
     <p>${count} item${count === 1 ? '' : 's'} • ${total}. See you at the counter shortly.</p>
   `
 
-  const list = panel.querySelector('.cart-panel__list')
-  const empty = panel.querySelector('.cart-panel__empty')
-  const footer = panel.querySelector('.cart-panel__footer')
+  const list = panel.querySelector<HTMLElement>('.cart-panel__list')
+  const empty = panel.querySelector<HTMLElement>('.cart-panel__empty')
+  const footer = panel.querySelector<HTMLElement>('.cart-panel__footer')
   if (list) list.style.display = 'none'
   if (empty) empty.style.display = 'none'
   if (footer) footer.style.display = 'none'

@@ -108,7 +108,7 @@ const sceneSvg = (): string => `
 /* Animation                                                           */
 /* ------------------------------------------------------------------ */
 
-const animateSteam = (scope: Element, ambient: gsap.core.Timeline[]): void => {
+const animateSteam = (scope: Element, ambient: gsap.core.Animation[]): void => {
   scope.querySelectorAll<SVGPathElement>('.fs-steam__wisp').forEach((wisp, index) => {
     ambient.push(
       gsap.timeline({ repeat: -1, delay: index * 0.55 }).fromTo(
@@ -159,7 +159,7 @@ export const initFooterScene = (): void => {
     return
   }
 
-  const ambient: gsap.core.Timeline[] = []
+  const ambient: gsap.core.Animation[] = []
 
   mount.querySelectorAll<SVGGElement>('.fs-lamp').forEach((lamp, index) => {
     gsap.set(lamp, { transformOrigin: '50% 0%' })
