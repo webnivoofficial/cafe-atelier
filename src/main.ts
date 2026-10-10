@@ -36,7 +36,15 @@ const mountApp = (): void => {
 const initSmoothScroll = (): Lenis | null => {
   if (reducedMotion()) return null
 
-  const lenis = new Lenis({ duration: 1.15, smoothWheel: true })
+  /* A touch slower and softer than before for a more relaxed, cinematic
+     glide — but still responsive to wheel, trackpad, keyboard and touch. */
+  const lenis = new Lenis({
+    duration: 1.32,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smoothWheel: true,
+    wheelMultiplier: 0.92,
+    touchMultiplier: 1,
+  })
   lenis.on('scroll', ScrollTrigger.update)
 
   gsap.ticker.add((time) => lenis.raf(time * 1000))

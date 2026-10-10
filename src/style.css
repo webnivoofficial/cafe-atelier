@@ -50,6 +50,10 @@
 
 html {
   scroll-behavior: auto;
+  /* Clip (not hidden) so decorative bleed can never widen the viewport,
+     without turning <html> into a scroll container that fights the
+     ScrollTrigger pin on the camera section. */
+  overflow-x: clip;
 }
 
 body {
