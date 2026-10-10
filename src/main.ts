@@ -182,7 +182,6 @@ const initCameraSceneLazy = (): void => {
     { rootMargin: '800px 0px' },
   )
   io.observe(section)
-  ;(window as unknown as Record<string, unknown>).__initCamera = () => initCameraScene()
 }
 
 const main = (): void => {
