@@ -86,24 +86,6 @@ export const appTemplate = `
           </div>
         </div>
 
-        <div class="hero__visual" aria-label="Cinematic 3D café environment">
-          <div class="hero-scene-shell glass-panel glass-sheen">
-            <canvas class="hero-canvas"></canvas>
-            <div class="hero-scene-halo"></div>
-            <div class="hero-scene-glow" aria-hidden="true"></div>
-          </div>
-          <div class="floating-card floating-card--a glass-panel" aria-hidden="true">
-            <div class="floating-card__swatch floating-card__swatch--1"></div>
-            <span>Roast No. 07</span>
-            <strong>Ethiopia Yirgacheffe</strong>
-          </div>
-          <div class="floating-card floating-card--b glass-panel" aria-hidden="true">
-            <div class="floating-card__swatch floating-card__swatch--2"></div>
-            <span>Seasonal</span>
-            <strong>Almond &amp; Honey</strong>
-          </div>
-        </div>
-
         <div class="scroll-indicator" aria-label="Scroll down">
           <span>Scroll</span>
           <div class="scroll-indicator__line"></div>
@@ -248,6 +230,28 @@ export const appTemplate = `
               </div>
               <div class="mini-feature__accent" aria-hidden="true"></div>
             </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="camera-transition" id="camera-transition" aria-label="A cinematic camera sweeps to reveal Café Atelier photographs">
+        <div class="camera-transition__bg" aria-hidden="true"></div>
+        <div class="camera-transition__tint" aria-hidden="true"></div>
+
+        <div class="camera-stage">
+          <div class="camera-photos" aria-hidden="true">
+            <figure class="camera-photo"><img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy" decoding="async" /></figure>
+            <figure class="camera-photo"><img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy" decoding="async" /></figure>
+            <figure class="camera-photo"><img src="https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy" decoding="async" /></figure>
+            <figure class="camera-photo"><img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy" decoding="async" /></figure>
+            <figure class="camera-photo"><img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy" decoding="async" /></figure>
+          </div>
+
+          <canvas class="camera-canvas"></canvas>
+
+          <div class="camera-caption glass-panel">
+            <p class="eyebrow"><span class="eyebrow__dot"></span>Through the lens</p>
+            <span class="camera-caption__text">Moments captured inside Café Atelier</span>
           </div>
         </div>
       </section>

@@ -8,12 +8,12 @@ import { appTemplate } from './template'
 import { reducedMotion } from './env'
 import { initCinemaBackground } from './cinema'
 import { initBeanField } from './beans'
-import { initHeroScene } from './heroScene'
 import { initFloatingSteamIcon } from './steam'
 import { initMenuOrder } from './menuOrder'
 import { initTextShuffle } from './textShuffle'
 import { initSocialGlitch } from './socialGlitch'
 import { initFooterScene } from './footerScene'
+import { initCameraScene } from './cameraScene'
 import { initCustomCursor } from './cursor'
 import { initWaypoints } from './waypoints'
 import { initUi } from './ui'
@@ -158,23 +158,32 @@ const playIntro = (): void => {
       { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' },
       0.84,
     )
-    .fromTo(
-      '.hero__visual',
-      { opacity: 0, y: 34, scale: 0.96 },
-      { opacity: 1, y: 0, scale: 1, duration: 1.15, ease: 'power3.out' },
-      0.35,
-    )
-    .fromTo(
-      '.floating-card',
-      { opacity: 0, y: 22 },
-      { opacity: 1, y: 0, duration: 0.75, stagger: 0.16, ease: 'power3.out' },
-      1.05,
-    )
 }
 
 /* ------------------------------------------------------------
    Boot
    ------------------------------------------------------------ */
+
+/* The camera transition is far down the page, so it (and Three.js) only
+   initializes once the visitor gets close — keeping first paint light. */
+const initCameraSceneLazy = (): void => {
+  const section = document.querySelector<HTMLElement>('.camera-transition')
+  if (!section || !('IntersectionObserver' in window)) {
+    void initCameraScene()
+    return
+  }
+  const io = new IntersectionObserver(
+    (entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        io.disconnect()
+        void initCameraScene()
+      }
+    },
+    { rootMargin: '800px 0px' },
+  )
+  io.observe(section)
+  ;(window as unknown as Record<string, unknown>).__initCamera = () => initCameraScene()
+}
 
 const main = (): void => {
   mountApp()
@@ -183,12 +192,12 @@ const main = (): void => {
 
   initCinemaBackground()
   initBeanField()
-  initHeroScene()
   initFloatingSteamIcon()
   initMenuOrder()
   initTextShuffle()
   initSocialGlitch()
   initFooterScene()
+  initCameraSceneLazy()
   initCustomCursor()
   initWaypoints()
   initUi()

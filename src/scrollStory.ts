@@ -73,13 +73,12 @@ const initStatCounters = (): void => {
 const initJourneys = (): void => {
   if (reducedMotion()) return
 
-  /* Hero — copy drifts up and dissolves while the 3D shell settles back. */
+  /* Hero — copy drifts up and dissolves as the section scrolls away. */
   gsap.timeline({
     scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.6 },
   })
     .to('.hero__copy', { y: -70, opacity: 0.18, ease: 'none' }, 0)
     .to('.hero__meta', { y: -34, opacity: 0, ease: 'none' }, 0)
-    .to('.hero__visual', { y: 44, scale: 0.94, ease: 'none' }, 0)
     .to('.scroll-indicator', { opacity: 0, ease: 'none' }, 0)
 
   /* Story — the photo stack breathes at slightly different rates. */
