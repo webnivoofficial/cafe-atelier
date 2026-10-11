@@ -1890,12 +1890,15 @@ body.menu-open .nav__toggle-bar:nth-child(3) {
 }
 
 /* ------------------------------------------------------------
-   Cinematic camera → gallery transition
+   Cinematic camera → gallery (one continuous, scroll-driven scene:
+   the gallery tiles themselves scatter around the camera and settle
+   into this section's own grid — there is no second gallery).
    ------------------------------------------------------------ */
 
 .camera-transition {
   position: relative;
   height: 100vh;
+  height: 100svh;
   min-height: 620px;
   overflow: hidden;
   isolation: isolate;
@@ -1926,6 +1929,7 @@ body.menu-open .nav__toggle-bar:nth-child(3) {
   position: absolute;
   inset: 0;
   z-index: 2;
+  pointer-events: none;
 }
 
 .camera-canvas {
@@ -1938,47 +1942,12 @@ body.menu-open .nav__toggle-bar:nth-child(3) {
   pointer-events: none;
 }
 
-.camera-photos {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  perspective: 1400px;
-  transform-style: preserve-3d;
-  pointer-events: none;
-}
-
-.camera-photo {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: clamp(128px, 20vw, 210px);
-  aspect-ratio: 4 / 3;
-  margin: 0;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  opacity: 0;
-  border: 1px solid var(--glass-border);
-  box-shadow:
-    0 24px 55px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(255, 240, 214, 0.22);
-  will-change: transform, opacity;
-  backface-visibility: hidden;
-}
-
-.camera-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  filter: saturate(1.05) brightness(0.96);
-}
-
 .camera-caption {
   position: absolute;
   left: 50%;
   bottom: 8%;
   transform: translateX(-50%);
-  z-index: 4;
+  z-index: 5;
   display: grid;
   gap: 6px;
   justify-items: center;
@@ -2002,10 +1971,6 @@ body.menu-open .nav__toggle-bar:nth-child(3) {
     min-height: 540px;
   }
 
-  .camera-photo {
-    width: clamp(104px, 32vw, 150px);
-  }
-
   .camera-caption {
     bottom: 10%;
     padding: 12px 20px;
@@ -2013,14 +1978,30 @@ body.menu-open .nav__toggle-bar:nth-child(3) {
 }
 
 /* ------------------------------------------------------------
-   Gallery + lightbox
+   Gallery — the settled composition of the scene above
    ------------------------------------------------------------ */
+
+.gallery-panel {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: clamp(18px, 3.6vh, 48px) clamp(20px, 5vw, 32px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.gallery__heading {
+  margin-bottom: clamp(16px, 3.4vh, 44px);
+}
 
 .gallery__grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: 220px;
-  gap: 22px;
+  grid-auto-rows: clamp(92px, 16.5vh, 220px);
+  gap: clamp(12px, 1.9vh, 22px);
 }
 
 .gallery__item {
@@ -2060,6 +2041,20 @@ body.menu-open .nav__toggle-bar:nth-child(3) {
 .gallery__item--large {
   grid-column: span 2;
   grid-row: span 2;
+}
+
+/* Phones & small tablets: a compact two-column mosaic that still fits the
+   pinned viewport so the settled gallery never overflows the scene. */
+@media (max-width: 900px) {
+  .gallery__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gallery__item--wide,
+  .gallery__item--large {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
 }
 
 .gallery__frame {

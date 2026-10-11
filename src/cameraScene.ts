@@ -9,11 +9,11 @@ type CameraRenderer = import('three').WebGLRenderer
 
 gsap.registerPlugin(ScrollTrigger)
 
-/* The settled gallery-wall arrangement the photographs scatter into,
-   expressed as fractions of the stage so it stays responsive. Two loose
-   rows with a slightly deeper centre tile reads as the existing gallery
-   unfolding organically — varied and outward, yet intentional and upright
-   (small rotY only), never a random pile of cards. */
+/* The loose mosaic the real gallery tiles briefly hold while the camera
+   travels — offsets are measured from each tile's FINAL grid position and
+   fade to exactly zero as the scroll completes. The tiles are the gallery:
+   the same elements scatter, then settle into their true layout slots, so
+   every photograph appears once with no hand-off to a second gallery. */
 const PHOTO_LAYOUT = [
   { x: -0.34, y: -0.3, rotY: 8, scale: 0.86, z: 16 },
   { x: 0.02, y: -0.37, rotY: -4, scale: 0.7, z: 36 },
@@ -151,35 +151,26 @@ const buildCameraModel = (THREE: ThreeNS): CameraGroup => {
   return group
 }
 
-/** Responsive pixel offsets for a photo's resting slot. */
-const slotFor = (stage: HTMLElement, index: number) => {
+/** The scattered pose for a gallery tile: an offset (in px, relative to
+ *  the tile's own in-flow position) that pulls it toward the camera's
+ *  centre plus a loose mosaic spread. Transform-only, so the grid layout
+ *  never shifts and the identity pose IS the exact designed destination. */
+const scatterFor = (section: HTMLElement, item: HTMLElement, index: number) => {
   const spec = PHOTO_LAYOUT[index % PHOTO_LAYOUT.length]
-  const w = stage.clientWidth
-  const h = stage.clientHeight
+  const w = section.clientWidth
+  const h = section.clientHeight
+  const cx = w / 2
+  const cy = h * 0.46
+  // offsetLeft/Top ignore transforms and the static grid + panel wrappers,
+  // so this stays accurate even while the section is pinned or scrubbed.
+  const ix = item.offsetLeft + item.offsetWidth / 2
+  const iy = item.offsetTop + item.offsetHeight / 2
   return {
-    fx: spec.x * Math.min(w * 0.44, 360),
-    fy: spec.y * Math.min(h * 0.4, 230),
-    rotY: spec.rotY,
-    scale: spec.scale,
-    z: spec.z,
+    x: cx - ix + spec.x * Math.min(w * 0.42, 430),
+    y: cy - iy + spec.y * Math.min(h * 0.36, 300),
+    rot: spec.rotY * 0.55,
+    scale: Math.max(0.5, spec.scale * 0.7),
   }
-}
-
-/** Static, unpinned arrangement used for reduced-motion and no-WebGL. */
-const layoutStatically = (stage: HTMLElement, photos: HTMLElement[]): void => {
-  photos.forEach((p, i) => {
-    const s = slotFor(stage, i)
-    gsap.set(p, {
-      xPercent: -50,
-      yPercent: -50,
-      x: s.fx,
-      y: s.fy,
-      z: 0,
-      rotationY: s.rotY * 0.4,
-      scale: s.scale,
-      autoAlpha: 1,
-    })
-  })
 }
 
 /* Guards against a second initialization (lazy fallback + observer,
@@ -194,20 +185,17 @@ export const initCameraScene = async (): Promise<void> => {
   const stage = section?.querySelector<HTMLElement>('.camera-stage')
   const canvas = section?.querySelector<HTMLCanvasElement>('.camera-canvas')
   const caption = section?.querySelector<HTMLElement>('.camera-caption')
-  const photos = Array.from(section?.querySelectorAll<HTMLElement>('.camera-photo') ?? [])
+  const heading = section?.querySelector<HTMLElement>('.gallery__heading')
+  const photos = Array.from(section?.querySelectorAll<HTMLElement>('.gallery__item') ?? [])
 
-  if (!section || !stage || !canvas || !caption || !photos.length) {
+  if (!section || !stage || !canvas || !caption || !heading || !photos.length) {
     cameraBooted = false
     return
   }
 
-  // Keep every plane centered on its own origin before GSAP takes over.
-  gsap.set(photos, { xPercent: -50, yPercent: -50 })
-
-  /* ---- Reduced motion: simple reveal, no pin, no scrub, no WebGL. ---- */
+  /* ---- Reduced motion: the gallery simply sits in its final layout. ---- */
   if (reducedMotion()) {
     canvas.style.display = 'none'
-    layoutStatically(stage, photos)
     return
   }
 
@@ -219,7 +207,6 @@ export const initCameraScene = async (): Promise<void> => {
     renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' })
   } catch {
     canvas.style.display = 'none'
-    layoutStatically(stage, photos)
     return
   }
 
@@ -309,6 +296,10 @@ export const initCameraScene = async (): Promise<void> => {
   gsap.set(caption, { autoAlpha: 1 })
   gsap.set(canvas, { autoAlpha: 1 })
 
+  // Scroll owns these entirely: hidden until the journey brings them in.
+  gsap.set(photos, { autoAlpha: 0 })
+  gsap.set(heading, { autoAlpha: 0 })
+
   let active = false
 
   const REV_START = 0.08
@@ -336,29 +327,50 @@ export const initCameraScene = async (): Promise<void> => {
   // Stages B–F: one continuous revolution along the curved 3D path.
   tl.to(m, { u: 1, duration: REV_DUR, ease: 'none', onUpdate: applyPath }, REV_START)
 
-  // Photographs scatter outward from the camera into the gallery-wall
-  // arrangement as it travels left, down and right — revealing progressively.
+  // Photographs — the real gallery tiles — emerge around the travelling
+  // camera as a loose mosaic, then glide toward their exact grid slots.
   photos.forEach((p, i) => {
+    const sc = () => scatterFor(section, p, i)
     tl.fromTo(
       p,
-      { autoAlpha: 0, scale: 0.4, x: 0, y: 0, z: -560, rotationY: 0 },
+      {
+        autoAlpha: 0,
+        x: () => sc().x * 0.3,
+        y: () => sc().y * 0.3 - 30,
+        scale: () => sc().scale * 0.7,
+        rotation: () => sc().rot * 0.4,
+      },
       {
         autoAlpha: 1,
-        scale: () => slotFor(stage, i).scale,
-        x: () => slotFor(stage, i).fx,
-        y: () => slotFor(stage, i).fy,
-        z: () => slotFor(stage, i).z,
-        rotationY: () => slotFor(stage, i).rotY,
-        duration: 0.4,
-        ease: 'power3.out',
+        x: () => sc().x,
+        y: () => sc().y,
+        scale: () => sc().scale,
+        rotation: () => sc().rot,
+        duration: 0.22,
+        ease: 'power2.out',
       },
-      0.18 + i * 0.09,
+      0.13 + i * 0.05,
+    )
+    // Settle: travel directly into the laid-out gallery position (identity).
+    tl.to(
+      p,
+      { x: 0, y: 0, scale: 1, rotation: 0, duration: 0.32, ease: 'power2.inOut' },
+      0.5 + i * 0.04,
     )
   })
 
+  // The gallery heading breathes in on the same scroll timeline, timed so
+  // it is fully visible exactly as the tiles reach their final positions.
+  tl.fromTo(
+    heading,
+    { autoAlpha: 0, y: 22 },
+    { autoAlpha: 1, y: 0, duration: 0.3, ease: 'power2.out' },
+    0.52,
+  )
+
   // The camera shrinks and fades away as the photographs take priority…
   tl.to(canvas, { autoAlpha: 0, duration: 0.12 }, 0.84)
-  // …but the photographs REMAIN settled in their composition (no hand-off fade).
+  // …the tiles simply continue to identity — nothing fades out or reappears.
 
   /* --------------------- Render only when visible --------------------- */
   const render = (): void => {

@@ -234,19 +234,11 @@ export const appTemplate = `
         </div>
       </section>
 
-      <section class="camera-transition" id="camera-transition" aria-label="A cinematic camera sweeps to reveal Café Atelier photographs">
+      <section class="camera-transition" id="gallery" aria-label="A cinematic camera sweeps through Café Atelier and settles into the gallery">
         <div class="camera-transition__bg" aria-hidden="true"></div>
         <div class="camera-transition__tint" aria-hidden="true"></div>
 
-        <div class="camera-stage">
-          <div class="camera-photos" aria-hidden="true">
-            <figure class="camera-photo"><img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy" decoding="async" /></figure>
-            <figure class="camera-photo"><img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy" decoding="async" /></figure>
-            <figure class="camera-photo"><img src="https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy" decoding="async" /></figure>
-            <figure class="camera-photo"><img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy" decoding="async" /></figure>
-            <figure class="camera-photo"><img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=800&q=80" alt="" loading="lazy" decoding="async" /></figure>
-          </div>
-
+        <div class="camera-stage" aria-hidden="true">
           <canvas class="camera-canvas"></canvas>
 
           <div class="camera-caption glass-panel">
@@ -254,15 +246,14 @@ export const appTemplate = `
             <span class="camera-caption__text">Moments captured inside Café Atelier</span>
           </div>
         </div>
-      </section>
 
-      <section class="gallery section reveal" id="gallery">
-        <div class="section-heading gallery__heading">
-          <p class="eyebrow eyebrow--muted"><span class="eyebrow__dot eyebrow__dot--muted"></span>Gallery</p>
-          <h2>Atmosphere in motion.</h2>
-        </div>
+        <div class="gallery-panel">
+          <div class="section-heading gallery__heading">
+            <p class="eyebrow eyebrow--muted"><span class="eyebrow__dot eyebrow__dot--muted"></span>Gallery</p>
+            <h2>Atmosphere in motion.</h2>
+          </div>
 
-        <div class="gallery__grid" aria-label="Gallery of café moments">
+          <div class="gallery__grid" aria-label="Gallery of café moments">
           <figure class="gallery__item gallery__item--tall tilt-3d" data-tilt>
             <img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=900&q=80" alt="Tea service at the cafe" loading="lazy" decoding="async" />
             <div class="gallery__frame" aria-hidden="true"></div>
@@ -283,6 +274,7 @@ export const appTemplate = `
             <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=900&q=80" alt="Coffee and pastry on a table" loading="lazy" decoding="async" />
             <div class="gallery__frame" aria-hidden="true"></div>
           </figure>
+          </div>
         </div>
       </section>
 

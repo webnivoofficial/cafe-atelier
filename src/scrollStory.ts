@@ -118,20 +118,9 @@ const initJourneys = (): void => {
     )
   })
 
-  /* Gallery — columns drift at alternating speeds for depth. */
-  const galleryItems = gsap.utils.toArray<HTMLElement>('.gallery__item')
-  galleryItems.forEach((item, index) => {
-    const speed = index % 3 === 0 ? 34 : index % 3 === 1 ? -26 : 18
-    gsap.fromTo(
-      item,
-      { y: speed * -0.6 },
-      {
-        y: speed,
-        ease: 'none',
-        scrollTrigger: { trigger: '.gallery', start: 'top bottom', end: 'bottom top', scrub: 0.9 },
-      },
-    )
-  })
+  /* Gallery tiles are animated end-to-end by the camera transition's own
+     pinned timeline (src/cameraScene.ts) — no drift here, or the two
+     timelines would fight over the same transforms. */
 
   /* Contact — the photo panel floats while the form rises to meet it. */
   gsap.timeline({
