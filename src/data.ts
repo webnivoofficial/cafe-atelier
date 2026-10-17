@@ -173,6 +173,10 @@ export const SOCIAL_PROFILES = {
 
 export type SocialKey = keyof typeof SOCIAL_PROFILES
 
+/** Canonical, deployed destination encoded by the table QR code and used
+ *  by every "Explore Menu" action. Update here if the domain ever moves. */
+export const MENU_PAGE_URL = 'https://cafe-atelier-xi.vercel.app/menu'
+
 /** Café photography for the cinematic, scroll-driven background. */
 export const CINEMA_PHOTOS = [
   'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=2000&q=80',

@@ -71,8 +71,10 @@ const initNav = (): void => {
 
   const navLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.nav__link'))
   navLinks.forEach((link) => {
-    const id = link.getAttribute('href')?.slice(1)
-    const section = id ? document.getElementById(id) : null
+    const href = link.getAttribute('href') ?? ''
+    // Page links (e.g. /menu) are real navigation, not in-page sections.
+    if (!href.startsWith('#')) return
+    const section = document.getElementById(href.slice(1))
     if (!section) return
 
     new IntersectionObserver(

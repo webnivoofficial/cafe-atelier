@@ -118,6 +118,16 @@ const initJourneys = (): void => {
     )
   })
 
+  /* Experience — the layered photographs breathe at gentle, opposing
+     rates (small travel only, so the composition never feels slippery). */
+  gsap
+    .timeline({
+      scrollTrigger: { trigger: '.experience', start: 'top bottom', end: 'bottom top', scrub: 0.8 },
+    })
+    .fromTo('.experience__photo--main', { y: 30 }, { y: -26, ease: 'none' }, 0)
+    .fromTo('.experience__photo--detail-a', { y: -18 }, { y: 22, ease: 'none' }, 0)
+    .fromTo('.experience__photo--detail-b', { y: 24 }, { y: -16, ease: 'none' }, 0)
+
   /* Gallery tiles are animated end-to-end by the camera transition's own
      pinned timeline (src/cameraScene.ts) — no drift here, or the two
      timelines would fight over the same transforms. */

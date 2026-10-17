@@ -1,0 +1,231 @@
+/* ============================================================
+   Café Atelier — dedicated menu page (/menu)
+   Editorial, readable, mobile-first. Shares the site's tokens
+   and glass language from style.css; adds only page layout.
+   ============================================================ */
+
+.menu-page {
+  position: relative;
+  min-height: 100vh;
+  isolation: isolate;
+}
+
+/* Soft warm vignette so the page feels like the café at dusk. */
+.menu-page__bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(70% 45% at 50% -8%, rgba(224, 164, 88, 0.14), transparent 65%),
+    radial-gradient(60% 50% at 92% 100%, rgba(90, 53, 33, 0.35), transparent 60%);
+}
+
+.menu-page__bar {
+  position: sticky;
+  top: 14px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: min(920px, calc(100% - 32px));
+  margin: 14px auto 0;
+  padding: 10px 18px;
+  border-radius: 999px;
+}
+
+.menu-page__back {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--muted);
+  white-space: nowrap;
+  transition: color 0.25s ease;
+}
+
+.menu-page__back:hover {
+  color: var(--amber);
+}
+
+.menu-page__main {
+  width: min(920px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 64px 0 40px;
+}
+
+.menu-page__title {
+  font-size: clamp(2.3rem, 5.4vw, 3.4rem);
+  color: var(--ivory);
+  margin: 14px 0 16px;
+}
+
+.menu-page__lead {
+  max-width: 560px;
+  color: var(--muted);
+}
+
+/* --- Category chips (plain anchors — no JS dependency) ---------- */
+
+.menu-page__chips {
+  position: sticky;
+  top: 78px;
+  z-index: 4;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 30px 0 8px;
+  padding: 10px 0;
+  background: linear-gradient(var(--ink), rgba(20, 15, 13, 0.72) 70%, transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.menu-page__chip {
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  color: var(--cream);
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: border-color 0.25s ease, color 0.25s ease;
+}
+
+.menu-page__chip:hover {
+  border-color: var(--amber-soft);
+  color: var(--amber);
+}
+
+/* --- Categories & items ----------------------------------------- */
+
+.menu-page__category {
+  /* Room for the sticky chip rail when jumping via #anchors. */
+  scroll-margin-top: 140px;
+  margin-top: 46px;
+}
+
+.menu-page__category-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--glass-border);
+  margin-bottom: 8px;
+}
+
+.menu-page__category-title {
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+  color: var(--amber);
+}
+
+.menu-page__category-note {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--faint);
+}
+
+.menu-page__items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-page__item {
+  display: flex;
+  gap: 16px;
+  padding: 16px 4px;
+  border-bottom: 1px dashed rgba(255, 226, 188, 0.12);
+}
+
+.menu-page__item:last-child {
+  border-bottom: none;
+}
+
+.menu-page__item-thumb {
+  width: 64px;
+  height: 64px;
+  flex: none;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--glass-border);
+}
+
+.menu-page__item-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.menu-page__item-line {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.menu-page__item-name {
+  font-size: 1.05rem;
+  color: var(--ivory);
+}
+
+.menu-page__item-badge {
+  margin-left: 8px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--glass-border);
+  background: rgba(224, 164, 88, 0.1);
+  color: var(--amber);
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+
+.menu-page__item-dots {
+  flex: 1;
+  border-bottom: 1px dotted rgba(244, 233, 217, 0.28);
+  transform: translateY(-4px);
+}
+
+.menu-page__item-price {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--cream);
+  white-space: nowrap;
+}
+
+.menu-page__item-desc {
+  margin-top: 4px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* --- Footer ------------------------------------------------------ */
+
+.menu-page__footer {
+  width: min(920px, calc(100% - 32px));
+  margin: 56px auto 0;
+  padding: 26px 0 40px;
+  border-top: 1px solid var(--glass-border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  justify-content: space-between;
+  color: var(--faint);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 560px) {
+  .menu-page__item-thumb {
+    width: 52px;
+    height: 52px;
+  }
+
+  .menu-page__item-badge {
+    display: block;
+    margin: 6px 0 0;
+    width: fit-content;
+  }
+}

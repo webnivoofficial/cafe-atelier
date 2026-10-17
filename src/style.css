@@ -1890,6 +1890,263 @@ body.menu-open .nav__toggle-bar:nth-child(3) {
 }
 
 /* ------------------------------------------------------------
+   The café experience — layered photography + quiet copy
+   ------------------------------------------------------------ */
+
+.experience {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+}
+
+.experience__media {
+  position: relative;
+  padding-bottom: 64px;
+}
+
+.experience__photo {
+  margin: 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-lift);
+}
+
+.experience__photo--main img {
+  width: 100%;
+  aspect-ratio: 4 / 3.1;
+  object-fit: cover;
+}
+
+.experience__photo--detail {
+  position: absolute;
+  bottom: 0;
+  border-radius: var(--radius-md);
+}
+
+.experience__photo--detail img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.experience__photo--detail-a {
+  left: -4%;
+  width: 31%;
+}
+
+.experience__photo--detail-b {
+  right: -2%;
+  bottom: 18px;
+  width: 27%;
+}
+
+.experience__chip {
+  position: absolute;
+  top: 18px;
+  right: -12px;
+  display: grid;
+  gap: 2px;
+  padding: 10px 18px;
+  border-radius: 999px;
+}
+
+.experience__chip span {
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.experience__chip strong {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--amber);
+}
+
+.experience__copy h2 {
+  font-size: clamp(1.9rem, 3.6vw, 2.7rem);
+  color: var(--ivory);
+  margin: 12px 0 18px;
+}
+
+.experience__copy > p:not(.eyebrow) {
+  color: var(--muted);
+}
+
+.experience__copy > p:not(.eyebrow) + p {
+  margin-top: 14px;
+}
+
+.experience__notes {
+  list-style: none;
+  margin: 24px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.experience__notes li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--cream);
+  font-size: 0.95rem;
+}
+
+.experience__note-dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--amber);
+  box-shadow: 0 0 0 4px rgba(224, 164, 88, 0.15);
+}
+
+/* ------------------------------------------------------------
+   Visit & menu access — practical info + real QR code
+   ------------------------------------------------------------ */
+
+.visit {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(32px, 5vw, 64px);
+  align-items: center;
+}
+
+.visit__copy h2 {
+  font-size: clamp(1.9rem, 3.6vw, 2.7rem);
+  color: var(--ivory);
+  margin: 12px 0 16px;
+}
+
+.visit__copy > p:not(.eyebrow) {
+  color: var(--muted);
+  max-width: 52ch;
+}
+
+.visit__facts {
+  list-style: none;
+  margin: 26px 0;
+  padding: 0;
+}
+
+.visit__facts li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 12px 2px;
+  border-bottom: 1px dashed rgba(255, 226, 188, 0.14);
+}
+
+.visit__fact-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.visit__facts strong {
+  color: var(--cream);
+  font-weight: 600;
+  text-align: right;
+}
+
+.visit__facts a:hover {
+  color: var(--amber);
+}
+
+.visit__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.visit__qr {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: clamp(24px, 4vw, 38px);
+  border-radius: var(--radius-xl);
+  text-align: center;
+}
+
+.visit__qr-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--ivory);
+}
+
+.visit__qr-sub {
+  font-size: 0.85rem;
+  color: var(--muted);
+  max-width: 32ch;
+}
+
+/* High-contrast ivory plate + padding = the QR's quiet zone, so the
+   code stays scannable against the dark glass panel. */
+.visit__qr-frame {
+  margin-top: 8px;
+  padding: 14px;
+  border-radius: 18px;
+  background: var(--ivory);
+  box-shadow: var(--shadow-lift);
+}
+
+#menu-qr {
+  display: block;
+  width: 206px;
+  height: 206px;
+}
+
+.visit__qr-url {
+  margin-top: 4px;
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  color: var(--faint);
+}
+
+.visit__qr-download {
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: var(--amber);
+  border-bottom: 1px dashed rgba(224, 164, 88, 0.4);
+  padding-bottom: 1px;
+  transition: border-color 0.25s ease;
+}
+
+.visit__qr-download:hover {
+  border-bottom-color: var(--amber);
+}
+
+/* If encoding ever fails, hide the code and keep the plain link. */
+.visit__qr.is-qr-unavailable .visit__qr-frame,
+.visit__qr.is-qr-unavailable .visit__qr-download {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .experience,
+  .visit {
+    grid-template-columns: 1fr;
+  }
+
+  .experience__chip {
+    right: 8px;
+  }
+
+  .visit__qr {
+    max-width: 420px;
+    margin: 0 auto;
+  }
+}
+
+/* ------------------------------------------------------------
    Cinematic camera → gallery (one continuous, scroll-driven scene:
    the gallery tiles themselves scatter around the camera and settle
    into this section's own grid — there is no second gallery).

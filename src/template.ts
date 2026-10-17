@@ -36,7 +36,7 @@ export const appTemplate = `
         <div class="nav__links" aria-label="Navigation links">
           <a href="#home" class="nav__link is-active">Home</a>
           <a href="#story" class="nav__link">Our Story</a>
-          <a href="#menu" class="nav__link">Menu</a>
+          <a href="/menu" class="nav__link">Menu</a>
           <a href="#gallery" class="nav__link">Gallery</a>
           <a href="#contact" class="nav__link">Contact</a>
         </div>
@@ -68,7 +68,7 @@ export const appTemplate = `
               Café Atelier blends modern coffee culture with warm hospitality, creating a refined space for lingering conversation and beautifully prepared drinks.
             </p>
             <div class="hero__actions">
-              <a class="button button--primary magnetic-btn" href="#menu" data-strength="0.2">Explore Our Menu</a>
+              <a class="button button--primary magnetic-btn" href="/menu" data-strength="0.2">Explore Our Menu</a>
               <a class="button button--secondary magnetic-btn" href="#story" data-strength="0.16">Discover Our Café</a>
             </div>
           </div>
@@ -234,6 +234,58 @@ export const appTemplate = `
         </div>
       </section>
 
+      <section class="experience section reveal" id="experience">
+        <div class="experience__media">
+          <figure class="experience__photo experience__photo--main glass-panel" data-tilt>
+            <img
+              src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1200&q=80"
+              alt="Sunlight falling across tables inside Café Atelier"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+          <figure class="experience__photo experience__photo--detail experience__photo--detail-a glass-panel">
+            <img
+              src="https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&w=600&q=80"
+              alt="Espresso being poured into a ceramic cup"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+          <figure class="experience__photo experience__photo--detail experience__photo--detail-b glass-panel">
+            <img
+              src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=600&q=80"
+              alt="A pastry and coffee waiting on a café table"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+          <div class="experience__chip glass-panel">
+            <span>On the counter now</span>
+            <strong>Velvet Roast — $5</strong>
+          </div>
+        </div>
+
+        <div class="experience__copy">
+          <p class="eyebrow eyebrow--muted"><span class="eyebrow__dot eyebrow__dot--muted"></span>The experience</p>
+          <h2>Where the afternoon softens.</h2>
+          <p>
+            Café Atelier is built for the unhurried — a room where the light moves slowly across
+            the tables, the counter always smells of freshly pulled espresso, and nobody rushes
+            your cup.
+          </p>
+          <p>
+            Come alone with a book, or bring two or three others. The pastries are baked in small
+            batches, the drinks are made to order, and the pace is deliberately yours.
+          </p>
+          <ul class="experience__notes" aria-label="Details of the café experience">
+            <li><span class="experience__note-dot" aria-hidden="true"></span>Window seats that track the afternoon light</li>
+            <li><span class="experience__note-dot" aria-hidden="true"></span>Small-batch bakes, restocked through the morning</li>
+            <li><span class="experience__note-dot" aria-hidden="true"></span>Quiet corners for reading, louder tables for catching up</li>
+          </ul>
+        </div>
+      </section>
+
       <section class="camera-transition" id="gallery" aria-label="A cinematic camera sweeps through Café Atelier and settles into the gallery">
         <div class="camera-transition__bg" aria-hidden="true"></div>
         <div class="camera-transition__tint" aria-hidden="true"></div>
@@ -276,6 +328,52 @@ export const appTemplate = `
           </figure>
           </div>
         </div>
+      </section>
+
+      <section class="visit section reveal" id="visit">
+        <div class="visit__copy">
+          <p class="eyebrow eyebrow--muted"><span class="eyebrow__dot eyebrow__dot--muted"></span>Plan your visit</p>
+          <h2>Your next coffee awaits.</h2>
+          <p>
+            The full menu lives on its own page — readable on any phone, no app required.
+            Browse it before you arrive, or scan the code at your table.
+          </p>
+          <ul class="visit__facts" aria-label="Café information">
+            <li>
+              <span class="visit__fact-label">Find us</span>
+              <strong>14 Mercer Lane, New York</strong>
+            </li>
+            <li>
+              <span class="visit__fact-label">Hours</span>
+              <strong>Daily • 7:30 AM – 8:00 PM</strong>
+            </li>
+            <li>
+              <span class="visit__fact-label">Call</span>
+              <strong><a href="tel:+12125550148">(212) 555-0148</a></strong>
+            </li>
+          </ul>
+          <div class="visit__actions">
+            <a class="button button--primary magnetic-btn" href="/menu" data-strength="0.2">Explore Menu</a>
+            <a
+              class="button button--secondary"
+              href="https://www.google.com/maps/search/?api=1&query=14+Mercer+Lane+New+York"
+              target="_blank"
+              rel="noopener noreferrer"
+            >Get Directions</a>
+          </div>
+        </div>
+
+        <aside class="visit__qr glass-panel" aria-label="QR code for the menu">
+          <p class="visit__qr-title">Scan to explore our menu</p>
+          <p class="visit__qr-sub">Point your camera at the code — the menu opens right away.</p>
+          <div class="visit__qr-frame">
+            <canvas id="menu-qr" role="img" aria-label="QR code linking to the Café Atelier menu page"></canvas>
+          </div>
+          <p class="visit__qr-url">cafe-atelier-xi.vercel.app/menu</p>
+          <a class="visit__qr-download" id="menu-qr-download" href="/menu" download="cafe-atelier-menu-qr.png">
+            Download QR for print
+          </a>
+        </aside>
       </section>
 
       <section class="contact section reveal" id="contact">
@@ -372,7 +470,7 @@ export const appTemplate = `
         <nav class="footer-nav" aria-label="Footer navigation">
           <a href="#home">Home</a>
           <a href="#story">Story</a>
-          <a href="#menu">Menu</a>
+          <a href="/menu">Menu</a>
           <a href="#gallery">Gallery</a>
           <a href="#contact">Contact</a>
         </nav>

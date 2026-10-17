@@ -210,6 +210,12 @@ const main = (): void => {
   initUi()
   initScrollStory()
 
+  /* The QR panel sits far below the fold — split the encoder out of the
+     critical bundle and paint it once the page is idle. */
+  window.setTimeout(() => {
+    void import('./qr').then((module) => module.initMenuQr())
+  }, 1200)
+
   initAnchorNavigation(lenis)
 
   // Menu re-renders change the page height — keep triggers honest.
